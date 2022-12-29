@@ -1,4 +1,4 @@
-struct customer {
+struct customer {   // struct representing customers
     int id;
     int isAttended; // 0 if is not
     char type;      // 'A' for app, 'N' for net
@@ -6,22 +6,21 @@ struct customer {
     int solicited;  // 1 if they have solicited domiciliary attention
 };
 
-struct customer customerList[20];
+struct customer customerList[20];       // customers list
 
-int appCustNum = 0;
-int netCustNum = 0;
-int domiciliarySolsNum = 0;
+int appCustNum;     // type app customers counter
+int netCustNum;     // type net customers counter
+int domSolsNum;     // domiciliary requests number
 
-pthread_mutex_t mutexFile;
-pthread_mutex_t mutexCustList;
-pthread_mutex_t mutexSolicitudes;
+pthread_mutex_t mutexFile;              // mutex for file access
+pthread_mutex_t mutexCustList;          // mutex for customer list access
+pthread_mutex_t mutexDomRequest;        // mutex for condition condDomRequest
 
-pthread_cond_t condSolicitudes;
+pthread_cond_t condDomRequest;          // condition for domiciliary requests
 
-struct technician
-{
-    pid_t pid;
+struct technician { // struct representing technicians
+    int id;
     char type;      // 'A' for app, 'N' for net
 };
 
-FILE logFile;
+FILE *logFile;       // log file

@@ -4,8 +4,12 @@
 
 int main(int argc, char *argv[]) {
 
-    int clientNum = 20, appTechsNum = 2;
+    int clientNum = 20;     // número de clientes
+    int appTechsNum = 2;    // número de técnicos de app
 
+    /*
+        Control de parámetros
+    */
     if(argc == 3) {
         if(atoi(argv[1])<1 || atoi(argv[2])<1) {
             printf("Los parámetros del programa deben ser números positivos.\n");
@@ -34,7 +38,7 @@ int main(int argc, char *argv[]) {
 
     logFile = fopen("log.txt", "w");                // opens log txt for writting (maybe changeable)
 
-
+    
 
 }
 

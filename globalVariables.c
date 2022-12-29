@@ -1,6 +1,6 @@
 struct customer {   // struct representing customers
     int id;
-    int isAttended; // 0 if is not
+    int isAttended; // -1 if is not, 0 if atending, 1 atended
     char type;      // 'A' for app, 'N' for net
     int priority;   
     int solicited;  // 1 if they have solicited domiciliary attention

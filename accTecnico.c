@@ -1,6 +1,20 @@
                                                             //principal function 
 void *accTecnico(struct technician tech){
-    techAction(tech);
+    
+    int counter = 1;
+    
+    while(1){
+        techAction(tech);
+        if(tech.type = 'A'){
+            if(counter == 5){
+                sleep(5);
+            }
+        }else{
+            if(counter == 6){
+                sleep(5);
+            }
+        }
+    }
 }
 
 techAction(struct technician tech){

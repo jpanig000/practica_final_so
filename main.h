@@ -2,6 +2,4 @@
 #include "accEncargado.c"
 #include "accTecnico.c"
 
-#include <pthread.h> 
-
 void declareHandlers();

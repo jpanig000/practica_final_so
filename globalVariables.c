@@ -1,5 +1,5 @@
 struct customer {   // struct representing customers
-    int id;
+    int id;         // End at 0 for app, 1 for net
     int isAttended; // -1 if is not, 0 if atending, 1 atended
     char type;      // 'A' for app, 'N' for net
     int priority;   

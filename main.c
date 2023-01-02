@@ -45,3 +45,24 @@ int main(int argc, char *argv[]) {
 void declareHandlers() {
     // parte de Rubén
 }
+
+void newClientApp(int sig){                         //New client with problems with the app                       
+    if(signal(SIGUSR1, newClientApp) == SIG_ERR){
+        perror("Error con SIGUSR1");
+        exit(-1);
+    }
+}
+
+void newClientNetwork(int sig){                     //New client with problems with network
+    if(signal(SIGUSR2, newClientNetwork) == SIG_ERR){
+        perror("Error con SIGUSR1");
+        exit(-1);
+    }
+}
+
+void finish(int sig){                               //Finish the program                           
+    if(signal(SIGINT, finish) == SIG_ERR){
+        perror("Error con SIGUSR1");
+        exit(-1);
+    }
+}

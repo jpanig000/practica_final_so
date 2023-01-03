@@ -43,10 +43,19 @@ int main(int argc, char *argv[]) {
 }
 
 void declareHandlers() {
-    newClientApp(0);
-    newClientNetwork(0);
-    finish(0);
-    
+    if(signal(SIGUSR1, newClientApp) == SIG_ERR){
+        perror("Error con SIGUSR1");
+        exit(-1);
+    }
+    if(signal(SIGUSR2, newClientNetwork) == SIG_ERR){
+        perror("Error con SIGUSR2");
+        exit(-1);
+    }
+    if(signal(SIGINT, finish) == SIG_ERR){
+        perror("Error con SIGINT");
+        exit(-1);
+    }
+    //Declarador de las manejadores
 }
 
 void newClientApp(int sig){                         //New client with problems with the app                       

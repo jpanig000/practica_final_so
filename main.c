@@ -43,7 +43,10 @@ int main(int argc, char *argv[]) {
 }
 
 void declareHandlers() {
-    // parte de Rubén
+    newClientApp(0);
+    newClientNetwork(0);
+    finish(0);
+    
 }
 
 void newClientApp(int sig){                         //New client with problems with the app                       
@@ -51,18 +54,30 @@ void newClientApp(int sig){                         //New client with problems w
         perror("Error con SIGUSR1");
         exit(-1);
     }
+    pthread_t t1;
+    char *type = "A";
+    pthread_create(&t1, NULL, accCliente, (void*)type);
+    //Empieza un nuevo cliente con problemas en la app
+    
 }
 
 void newClientNetwork(int sig){                     //New client with problems with network
     if(signal(SIGUSR2, newClientNetwork) == SIG_ERR){
-        perror("Error con SIGUSR1");
+        perror("Error con SIGUSR2");
         exit(-1);
     }
+    //Empieza un nuevo cliente con problemas en la red
+    pthread_t t1;
+    char *type = "N";
+    pthread_create(&t1, NULL, accCliente, (void*)type);
+    
 }
 
 void finish(int sig){                               //Finish the program                           
     if(signal(SIGINT, finish) == SIG_ERR){
-        perror("Error con SIGUSR1");
+        perror("Error con SIGINT");
         exit(-1);
     }
+    //Finaliza la aplicacion
+    
 }

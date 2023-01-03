@@ -54,10 +54,8 @@ void newClientApp(int sig){                         //New client with problems w
         perror("Error con SIGUSR1");
         exit(-1);
     }
-    pthread_t t1;
-    char *type = "A";
-    pthread_create(&t1, NULL, accCliente, (void*)type);
     //Empieza un nuevo cliente con problemas en la app
+    nuevoCliente('A');
     
 }
 
@@ -67,9 +65,7 @@ void newClientNetwork(int sig){                     //New client with problems w
         exit(-1);
     }
     //Empieza un nuevo cliente con problemas en la red
-    pthread_t t1;
-    char *type = "N";
-    pthread_create(&t1, NULL, accCliente, (void*)type);
+    nuevoCliente('N');
     
 }
 
@@ -78,6 +74,7 @@ void finish(int sig){                               //Finish the program
         perror("Error con SIGINT");
         exit(-1);
     }
-    //Finaliza la aplicacion
+    
+    //Finaliza todos los clientes en cola, ya no permite tener nuevas solicitudes
     
 }

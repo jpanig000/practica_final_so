@@ -54,15 +54,14 @@ void techAction(struct technician tech){
     
     //escribir en log que se inicia la atencion
 
-    char id[] = "";
+    char id[100];
     char number[] = "";
     
-    strcat(id,"tech");
-    strcat(id, tech.type);
-    strcat(id, (tech.id));
-    itoa(tech.id,number ,10);
+    strcat(id,("tech%c%d",tech.type,tech.id));
     
-    char idCli[] = next.id;
+    char idCli[100] = "";
+
+    sprintf(idCli,"%d",next.id);
 
     char message[] = "the tech starts the attention to client ";
 

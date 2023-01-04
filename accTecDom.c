@@ -6,7 +6,7 @@ void *accTecnicoDomiciliario(){
 
 }
 
-tecDom(){
+void tecDom(){
     
     //Si no se cumple la condicion se queda bloqueado
     pthread_mutex_lock(&mutexDomRequest);
@@ -52,7 +52,14 @@ tecDom(){
         //Escribe en el log que ha atendido al cliente
         pthread_mutex_lock(&mutexFile);
         
-        writeLog(""," ha atendido al cliente");
+        //Concateno la cadena con el id del cliente 
+        char dest[30] = "ha atendido al cliente";
+        char anad[10];
+        int num = next.id;
+        sprintf(anad, "%d", num);
+        strcat(dest, anad);
+        
+        writeLog("tecDom", dest);
         
         pthread_mutex_unlock(&mutexFile);
         

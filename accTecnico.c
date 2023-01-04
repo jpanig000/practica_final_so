@@ -56,10 +56,10 @@ techAction(struct technician tech){
 
     char[] id;
     
-    strncat(id,"tech",4);
-    strncat(id, tech.type ,1);
-    strncat(id, tech.id ,4);
-    
+    strcat(id,"tech");
+    strcat(id, tech.type);
+    strcat(id, tech.id);
+
     char[] message = "the tech starts the attention to client %s",client.id;
 
     pthread_mutex_lock(&mutexFile);

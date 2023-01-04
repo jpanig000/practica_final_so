@@ -17,7 +17,7 @@ void *accTecnico(struct technician tech){
     }
 }
 
-techAction(struct technician tech){
+void techAction(struct technician tech){
     struct customer next;
     next.id = 0;
     next.isAttended = -1;
@@ -54,13 +54,17 @@ techAction(struct technician tech){
     
     //escribir en log que se inicia la atencion
 
-    char[] id;
+    char id[] = "";
     
     strcat(id,"tech");
     strcat(id, tech.type);
     strcat(id, itoa(tech.id));
+    
+    char idCli[] = next.id;
 
-    char[] message = "the tech starts the attention to client %s",client.id;
+    char message[] = "the tech starts the attention to client ";
+
+    strcat(message, idCli);
 
     pthread_mutex_lock(&mutexFile);
         writeLog(id, message);

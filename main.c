@@ -42,16 +42,19 @@ int main(int argc, char *argv[]) {
     //CREACION TEMPORAL PARA PRUEBAS DE TECNICOS Y ENCARGADO
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+    //estructura tecnico red
     struct technician prueba;
     prueba.id = 0;
     prueba.type = 'A';
-    //hilo tecnico 1
+    //hilo tecnico app
 
-    //estructura tecnico 2
+    //estructura tecnico app
     struct technician prueba1;
     prueba1.id = 0;
     prueba1.type = 'N';
-    //hilo tecnico 2
+    //hilo tecnico red
+
+    //hilo encargago
 
 
 

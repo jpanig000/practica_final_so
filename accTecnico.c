@@ -1,5 +1,5 @@
                                                             //principal function 
-void *accTecnico(struct technician tech){
+void accTecnico(struct technician tech){
     
     int counter = 1;
     
@@ -55,10 +55,12 @@ void techAction(struct technician tech){
     //escribir en log que se inicia la atencion
 
     char id[] = "";
+    char number[] = "";
     
     strcat(id,"tech");
     strcat(id, tech.type);
-    strcat(id, itoa(tech.id));
+    strcat(id, (tech.id));
+    itoa(tech.id,number ,10);
     
     char idCli[] = next.id;
 

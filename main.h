@@ -1,4 +1,6 @@
-                                                            //Main
+ 
+#include "globalVariables.c"
+                                                           //Main
 void declareHandlers();
 void newClientApp(int sig);
 void newClientNetwork(int sig);
@@ -18,7 +20,7 @@ void clearClient(int numClient);
 void *accEncargado();
 void manAction();
                                                             //accTecnico
-void *accTecnico(struct technician tech);
+void accTecnico(struct technician tech);
 void techAction(struct technician tech);
                                                             //accTecDom
 void *accTecnicoDomiciliario();
@@ -26,7 +28,6 @@ void tecDom();
                                                             //writeLog
 void writeLog(char *id, char *msg);
 
-#include "globalVariables.c"
 #include "accCliente.c"
 #include "nuevoCliente.c"
 #include "writeLog.c"

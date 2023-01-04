@@ -68,7 +68,7 @@ void techAction(struct technician tech){
 
     sprintf(idCli,"%d",next.id);
 
-    char message[] = "the tech starts the attention to client ";
+    char message[] = "the tech starts attending to client ";
 
     strcat(message, idCli);
 

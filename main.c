@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
     pthread_t newPhread2;
     pthread_create(&newPhread2, NULL, accTecnico, &prueba1);
 
-    // pthread_t newPhread3;
-    // pthread_create(&newPhread3, NULL, accEncargado, NULL);
+    pthread_t newPhread3;
+    pthread_create(&newPhread3, NULL, accEncargado, NULL);
     //hilo encargago
 
 

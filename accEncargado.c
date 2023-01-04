@@ -22,7 +22,7 @@ void manAction(){
                 struct customer actual = customerList[i];
                 if (actual.id != 0 && actual.isAttended == -1){
 
-                    if (next.type == 'N'){
+                    if (actual.type == 'N'){
                         if (actual.priority > next.priority){
                         next = actual;
                         }else if(actual.id < next.id) {
@@ -37,7 +37,7 @@ void manAction(){
                     struct customer actual = customerList[i];
                     if (actual.id != 0 && actual.isAttended == -1){
 
-                        if (next.type == 'A'){
+                        if (actual.type == 'A'){
                             if (actual.priority > next.priority){
                             next = actual;
                             }else if(actual.id < next.id) {
@@ -71,7 +71,7 @@ void manAction(){
 
     sprintf(idCli,"%d",next.id);
 
-    char message[] = "starts the attention to client ";
+    char message[] = "starts attending client ";
 
     strcat(message, idCli);
 
@@ -93,7 +93,7 @@ void manAction(){
     }
     
                                                             //escribir en log que finaliza la atencion
-    char message1[] = "finalized the attention to client ";
+    char message1[] = "finalized finalized the attention to client ";
     strcat(message1, idCli);
 
     pthread_mutex_lock(&mutexFile);

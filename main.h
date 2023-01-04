@@ -19,6 +19,7 @@ void manAction();
                                                             //accEncargado
 void *accTecnico(struct technician tech);
 void techAction(struct technician tech);
+void *accTecnicoDomiciliario();
                                                             //writeLog
 void writeLog(char *id, char *msg);
 
@@ -28,5 +29,6 @@ void writeLog(char *id, char *msg);
 #include "writeLog.c"
 #include "accTecnico.c"
 #include "accEncargado.c"
+#include "accTecDom.c"
 
 

@@ -57,7 +57,7 @@ void techAction(struct technician tech){
     char id[100];
     char number[] = "";
     
-    strcat(id,("tech%c%d",tech.type,tech.id));
+    sprintf(id,"tech%c%d",tech.type,tech.id);
     
     char idCli[100] = "";
 

@@ -20,6 +20,8 @@ void manAction();
 void *accTecnico(struct technician tech);
 void techAction(struct technician tech);
 
+void writeLog(char *id, char *msg);
+
 #include "globalVariables.c"
 #include "accCliente.c"
 #include "nuevoCliente.c"

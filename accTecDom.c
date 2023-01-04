@@ -93,7 +93,7 @@ void tecDom(){
     //Avisa a los que han terminado que la solicitud actual ha finalizado
     pthread_mutex_lock(&mutexDomRequest);
 
-    pthread_cond_signal(&condDomRequest,&mutexDomRequest);
+    pthread_cond_signal(&condDomRequest);
     
     pthread_mutex_unlock(&mutexDomRequest);
     

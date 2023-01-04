@@ -20,6 +20,7 @@ void manAction();
 void *accTecnico(struct technician tech);
 void techAction(struct technician tech);
 void *accTecnicoDomiciliario();
+void tecDom();
                                                             //writeLog
 void writeLog(char *id, char *msg);
 

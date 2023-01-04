@@ -38,6 +38,23 @@ int main(int argc, char *argv[]) {
 
     logFile = fopen("log.txt", "w");                // opens log txt for writting (maybe changeable)
 
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //CREACION TEMPORAL PARA PRUEBAS DE TECNICOS Y ENCARGADO
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    struct technician prueba;
+    prueba.id = 0;
+    prueba.type = 'A';
+    //hilo tecnico 1
+
+    //estructura tecnico 2
+    struct technician prueba1;
+    prueba1.id = 0;
+    prueba1.type = 'N';
+    //hilo tecnico 2
+
+
+
     while(1){
         sleep(1);
     }

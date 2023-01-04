@@ -22,7 +22,7 @@ manAction(){
                 struct customer actual = customerList[i];
                 if (actual.id != 0 && actual.isAttended == -1){
 
-                    if (next.type == 'R'){
+                    if (next.type == 'N'){
                         if (actual.priority > next.priority){
                         next = actual;
                         }else if(actual.id < next.id) {

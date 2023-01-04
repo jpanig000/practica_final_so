@@ -1,5 +1,5 @@
 #include "globalVariables.c"
-#include "accEncargado.c"
-#include "accTecnico.c"
+#include "nuevoCliente.c"
+#include "accCliente.c"
 
 void declareHandlers();

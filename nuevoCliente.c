@@ -1,4 +1,4 @@
-#include "main.h"
+#include "methods.h"
 
 void nuevoCliente(char type){
 
@@ -7,19 +7,19 @@ void nuevoCliente(char type){
     */
     if(1){
         printf("Aqui se crearía un nuevo cliente.\n");
-        return 0;
+        return;
     }
 
     int clientNum = 20;
     short haveSpace = 0;    //If have no space 0, else the free space
-    phread_mutex_lock(&mutexCustList);
+    pthread_mutex_lock(&mutexCustList);
     for(int i=0; i<clientNum && haveSpace==0; i++){
         if(customerList[i].id == 0){
             haveSpace = i;
         }
     }
     if(haveSpace == 0){     //No space
-        phread_mutex_unlock(&mutexCustList);
+        pthread_mutex_unlock(&mutexCustList);
         // Logger -> No hay espacio
     }else{                  //We create the new client
         switch (type){
@@ -40,9 +40,9 @@ void nuevoCliente(char type){
         customerList[haveSpace].isAttended = -1;
         customerList[haveSpace].type = type;
         customerList[haveSpace].solicited = 0;
-        customerList[haveSpace].priority=/*aleatorio 1-10*/;
+        customerList[haveSpace].priority=1/*aleatorio 1-10*/;
         pthread_t newPhread;
 	    pthread_create(&newPhread, NULL, accCliente, &haveSpace);
-        phread_mutex_unlock(&mutexCustList);
+        pthread_mutex_unlock(&mutexCustList);
     }
 }

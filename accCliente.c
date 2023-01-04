@@ -1,4 +1,4 @@
-#include "main.h"
+#include "methods.h"
 
 void *accCliente(void *ptr){
 
@@ -7,7 +7,7 @@ void *accCliente(void *ptr){
     */
     if(1){
         printf("Aqui se ejecutaría las acciones de un cliente con id %d.\n", customerList[*(int *)ptr].id);
-        return 0;
+
     }
 
     // Logger -> hora entrada + tipo de cliente
@@ -29,14 +29,14 @@ void *accCliente(void *ptr){
         }else if(attended == 1 && (customerList[*(int *)ptr].type = 'N')){
             clientAttendedAndNetClient(*(int *)ptr);
         }else{
-            clientExit(*(int *)ptr)
+            clientExit(*(int *)ptr);
         }
 
     }
 }
 
 int clientNotAttended(int numClient, int secondPassed){
-    int clientConduct = /*aleatorio 1-100*/;
+    int clientConduct = 1/*aleatorio 1-100*/;
 
     if(clientConduct <= 10){            // 10% find difficult the app and leaves
         clientExit(numClient);
@@ -61,7 +61,7 @@ void clientAttending(int numClient){
 }
 
 void clientAttendedAndNetClient(int numClient){
-    if( 30 <= /*aleatorio 1-30*/ ){     // 30% of net clients make a domiciliary requests
+    if( 30 <= 1/*aleatorio 1-30*/ ){     // 30% of net clients make a domiciliary requests
        clientDomiciliaryRequests(numClient);
     }else{
         clientExit(numClient);
@@ -85,7 +85,7 @@ void clientDomiciliaryRequests(int numClient){
         pthread_mutex_lock(&mutexDomRequest);
         if(domSolsNum == 4){
             pthread_mutex_unlock(&mutexCustList);
-            signal(condDomRequest);
+            pthread_cond_signal(&condDomRequest);
         }else{
             pthread_mutex_unlock(&mutexCustList);
         }
@@ -93,7 +93,7 @@ void clientDomiciliaryRequests(int numClient){
         pthread_mutex_lock(&mutexCustList);
         while(customerList[numClient].solicited == 0){
             pthread_mutex_unlock(&mutexCustList);
-            wait(condDomRequest);
+            pthread_cond_wait(&condDomRequest, &mutexDomRequest);
             pthread_mutex_lock(&mutexCustList);
         }
         pthread_mutex_unlock(&mutexCustList);

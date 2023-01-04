@@ -38,7 +38,9 @@ int main(int argc, char *argv[]) {
 
     logFile = fopen("log.txt", "w");                // opens log txt for writting (maybe changeable)
 
-    
+    while(1){
+        sleep(1);
+    }
 
 }
 

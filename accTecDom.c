@@ -11,7 +11,7 @@ void tecDom(){
     //Si no se cumple la condicion se queda bloqueado
     pthread_mutex_lock(&mutexDomRequest);
     
-    pthread_cond_wait(&condDomRequest,&mutex);
+    pthread_cond_wait(&condDomRequest,&mutexDomRequest);
     
     pthread_mutex_unlock(&mutexDomRequest);
     
@@ -93,7 +93,7 @@ void tecDom(){
     //Avisa a los que han terminado que la solicitud actual ha finalizado
     pthread_mutex_lock(&mutexDomRequest);
 
-    pthread_cond_signal(&condDomRequest,&mutex);
+    pthread_cond_signal(&condDomRequest,&mutexDomRequest);
     
     pthread_mutex_unlock(&mutexDomRequest);
     

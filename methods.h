@@ -9,3 +9,10 @@ void clientAttendedAndNetClient(int numClient);
 void clientDomiciliaryRequests(int numClient);
 void clientExit(int numClient, char* reason);
 void clearClient(int numClient);
+
+                                                            //accTecnico
+void *accEncargado();
+void manAction();
+                                                            //accEncargado
+void *accTecnico(struct technician tech);
+void techAction(struct technician tech);

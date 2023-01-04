@@ -13,12 +13,13 @@ void clientAttendedAndNetClient(int numClient);
 void clientDomiciliaryRequests(int numClient);
 void clientExit(int numClient, char* reason);
 void clearClient(int numClient);
-                                                            //accTecnico
+                                                            //accEncargado
 void *accEncargado();
 void manAction();
-                                                            //accEncargado
+                                                            //accTecnico
 void *accTecnico(struct technician tech);
 void techAction(struct technician tech);
+                                                            //accTecDom
 void *accTecnicoDomiciliario();
 void tecDom();
                                                             //writeLog

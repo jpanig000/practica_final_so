@@ -7,6 +7,7 @@ void finish(int sig);
 void nuevoCliente(char type);
                                                             //accCliente
 void *accCliente(void *ptr);
+void nameClient(int numClient, char nombre[]);
 int clientNotAttended(int numClient, int secondPassed);
 void clientAttending(int numClient);
 void clientAttendedAndNetClient(int numClient);

@@ -3,7 +3,11 @@ void *accCliente(void *ptr){
 
     int numClient = *(int *) ptr;
     
-    printf("Logger -> Nuevo cliente tipo %c con id %d\n", customerList[numClient].type, customerList[numClient].id);
+    char name[100] = "";
+    nameClient(numClient, name);
+    pthread_mutex_lock(&mutexFile);
+    writeLog(name,"Nuevo cliente.");
+    pthread_mutex_unlock(&mutexFile);
 
     short secondPassed = 0;
     short attended;
@@ -24,6 +28,10 @@ void *accCliente(void *ptr){
         }
 
     }
+}
+
+void nameClient(int numClient, char nombre[]){
+    nombre = "Cliente%c%d",customerList[numClient].type,customerList[numClient].id;
 }
 
 int clientNotAttended(int numClient, int secondPassed){
@@ -67,7 +75,11 @@ void clientDomiciliaryRequests(int numClient){
         domSolsNum++;
         pthread_mutex_unlock(&mutexDomRequest);
 
-        printf("Logger -> %d Espero a ser atendido por atencion domiciliaria\n", customerList[numClient].id);
+        char name2[100] = "";
+        nameClient(numClient, name2);
+        pthread_mutex_lock(&mutexFile);
+        writeLog(name2,"Espero a ser atendido por atencion domiciliaria");
+        pthread_mutex_unlock(&mutexFile);
 
         pthread_mutex_lock(&mutexCustList);
         customerList[numClient].solicited = 1;
@@ -89,7 +101,13 @@ void clientDomiciliaryRequests(int numClient){
         }
         pthread_mutex_unlock(&mutexCustList);
 
-        printf("Logger -> %d Mi atencion ha finalizado\n", customerList[numClient].id);
+        char name[100] = "";
+        nameClient(numClient, name);
+
+        pthread_mutex_lock(&mutexFile);
+        writeLog(name,"Mi atencion ha finalizado");
+        pthread_mutex_unlock(&mutexFile);
+
         clientExit(numClient, "Atención domiciliaria finalizada.");
     }else{
         pthread_mutex_unlock(&mutexDomRequest);
@@ -100,7 +118,17 @@ void clientDomiciliaryRequests(int numClient){
 
 
 void clientExit(int numClient, char* reason){
-    printf("Logger -> %d se va de la aplicacion por el motivo: %s\n", customerList[numClient].id, reason);
+
+    char name[100] = "";
+    nameClient(numClient, name);
+
+    char mensaje[100] = "se va de la aplicacion por el motivo: ";
+    strcat(mensaje, reason);
+
+    pthread_mutex_lock(&mutexFile);
+    writeLog(name,mensaje);
+    pthread_mutex_unlock(&mutexFile);
+
     clearClient(numClient);
     pthread_exit(NULL);
 }

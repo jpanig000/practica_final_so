@@ -1,4 +1,3 @@
-#include "methods.h"
 
 void nuevoCliente(char type){
 

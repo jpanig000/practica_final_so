@@ -1,4 +1,3 @@
-#include "methods.h"
 
 void *accCliente(void *ptr){
 

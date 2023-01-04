@@ -21,17 +21,25 @@ void *accCliente(void *ptr){
             secondPassed = clientNotAttended(numClient, secondPassed);
         }else if(attended == 0){
             clientAttending(numClient);
-        }else if(attended == 1 && (customerList[numClient].type = 'N')){
-            clientAttendedAndNetClient(numClient);
         }else{
-            clientExit(numClient, "Ya he sido atendido.");
+            char type;
+            pthread_mutex_lock(&mutexCustList);
+            type = customerList[numClient].type;
+            pthread_mutex_unlock(&mutexCustList);
+            if(attended == 1 && (type = 'N')){
+                clientAttendedAndNetClient(numClient);
+            }else{
+                clientExit(numClient, "Ya he sido atendido.");
+            }
         }
 
     }
 }
 
 void nameClient(int numClient, char nombre[]){
+    pthread_mutex_lock(&mutexCustList);
     nombre = "Cliente%c%d",customerList[numClient].type,customerList[numClient].id;
+    pthread_mutex_unlock(&mutexCustList);
 }
 
 int clientNotAttended(int numClient, int secondPassed){

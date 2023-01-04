@@ -1,9 +1,8 @@
 
 void nuevoCliente(char type){
 
-    // ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-    int clientNum = 20;     //Hay que cambiar esto para que valga lo mismo que lo que el usuario inserte.
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    int clientNum = sizeof(customerList)/sizeof(struct customer);
 
     int haveSpace = -1;    //If have no space -1, else the free space
     

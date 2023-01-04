@@ -20,7 +20,7 @@ void clearClient(int numClient);
 void *accEncargado();
 void manAction();
                                                             //accTecnico
-void accTecnico(struct technician tech);
+void *accTecnico(void *tech);
 void techAction(struct technician tech);
                                                             //accTecDom
 void *accTecnicoDomiciliario();

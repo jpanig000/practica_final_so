@@ -1,6 +1,7 @@
                                                             //principal function 
-void accTecnico(struct technician tech){
+void *accTecnico(void *techPointer){
     
+    struct technician tech = *(struct technician *) techPointer;
     int counter = 1;
     
     while(1){
@@ -23,6 +24,8 @@ void techAction(struct technician tech){
     next.isAttended = -1;
     next.priority = 0;
     
+    int numNext=-1;
+
     do{
         pthread_mutex_lock(&mutexCustList);
 
@@ -32,8 +35,10 @@ void techAction(struct technician tech){
                 if (actual.id != 0 && actual.isAttended == -1 && actual.type == tech.type){
                     if (actual.priority > next.priority){
                         next = actual;
+                        numNext = i;
                     }else if(actual.id < next.id) {
                         next = actual;
+                        numNext = i;
                     }
                 }
             }
@@ -46,7 +51,7 @@ void techAction(struct technician tech){
     
                                                             //cambiar condición a atendiendo
     pthread_mutex_lock(&mutexCustList);
-        next.isAttended == 0;
+        customerList[numNext].isAttended = 0;
     pthread_mutex_unlock(&mutexCustList);
 
                                                             //calcular numero aleatorio para tipo de atencion
@@ -111,7 +116,7 @@ void techAction(struct technician tech){
 
                                                             //cambiar atendido
     pthread_mutex_lock(&mutexCustList);
-        next.isAttended == 0;
+        customerList[numNext].isAttended = 1;
     pthread_mutex_unlock(&mutexCustList);
 
 }

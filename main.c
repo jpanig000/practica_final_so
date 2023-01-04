@@ -46,14 +46,20 @@ int main(int argc, char *argv[]) {
     struct technician prueba;
     prueba.id = 0;
     prueba.type = 'A';
-    //hilo tecnico app
+
+    pthread_t newPhread1;
+    pthread_create(&newPhread1, NULL, accTecnico, &prueba);
 
     //estructura tecnico app
     struct technician prueba1;
     prueba1.id = 0;
     prueba1.type = 'N';
-    //hilo tecnico red
+    
+    pthread_t newPhread2;
+    pthread_create(&newPhread2, NULL, accTecnico, &prueba1);
 
+    // pthread_t newPhread3;
+    // pthread_create(&newPhread3, NULL, accEncargado, NULL);
     //hilo encargago
 
 

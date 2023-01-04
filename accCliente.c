@@ -17,6 +17,7 @@ void *accCliente(void *ptr){
         attended = customerList[numClient].isAttended;
         pthread_mutex_unlock(&mutexCustList);
 
+        // printf("Attended: %d\n", attended);
         if(attended == -1){
             secondPassed = clientNotAttended(numClient, secondPassed);
         }else if(attended == 0){
@@ -41,12 +42,12 @@ void nameClient(int numClient, char nombre[]){
     char typeClient = customerList[numClient].type;
     int idClient = customerList[numClient].id;
     pthread_mutex_unlock(&mutexCustList);
-    
+
     sprintf(nombre,"Cliente%c%d",typeClient,idClient);
 }
 
 int clientNotAttended(int numClient, int secondPassed){
-    int clientConduct = 1/*aleatorio 1-100*/;
+    int clientConduct = 50/*aleatorio 1-100*/;
 
     if(clientConduct <= 10){            // 10% find difficult the app and leaves
         clientExit(numClient, "Me parece dificil la aplicación.");

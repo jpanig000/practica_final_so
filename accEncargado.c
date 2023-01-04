@@ -7,7 +7,7 @@ void *accEncargado(){
 
 }
 
-manAction(){
+void manAction(){
     struct customer next;
     next.id = 0;
     next.isAttended = -1;

@@ -54,7 +54,12 @@ techAction(struct technician tech){
     
     //escribir en log que se inicia la atencion
 
-    char[] id = "tech" + tech.type + tech.id;
+    char[] id;
+    
+    strncat(id,"tech",4);
+    strncat(id, tech.type ,1);
+    strncat(id, tech.id ,4);
+    
     char[] message = "the tech starts the attention to client %s",client.id;
 
     pthread_mutex_lock(&mutexFile);

@@ -6,7 +6,7 @@ void *accTecnico(void *techPointer){
     
     while(1){
         techAction(tech);
-        if(tech.type = 'A'){
+        if(tech.type == 'A'){
             if(counter == 5){
                 sleep(5);
             }

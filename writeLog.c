@@ -7,11 +7,7 @@ void writeLog(char *id, char *msg){
  
     // Escribimos en el log
 
-    logFile = fopen("log.txt", "a");
+    logFile = fopen("registroTiempos.log", "a");
     fprintf(logFile, "[%s] %s: %s\n", stnow, id, msg);
     fclose(logFile); 
 }
-
-
-
-

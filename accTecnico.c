@@ -58,7 +58,7 @@ techAction(struct technician tech){
     
     strcat(id,"tech");
     strcat(id, tech.type);
-    strcat(id, tech.id);
+    strcat(id, itoa(tech.id));
 
     char[] message = "the tech starts the attention to client %s",client.id;
 

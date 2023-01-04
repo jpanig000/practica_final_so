@@ -3,7 +3,7 @@ void *accCliente(void *ptr){
 
     int numClient = *(int *) ptr;
     
-    char name[100] = "";
+    char name[200] = "";
     nameClient(numClient, name);
     pthread_mutex_lock(&mutexFile);
     writeLog(name,"Nuevo cliente.");
@@ -38,8 +38,11 @@ void *accCliente(void *ptr){
 
 void nameClient(int numClient, char nombre[]){
     pthread_mutex_lock(&mutexCustList);
-    nombre = "Cliente%c%d",customerList[numClient].type,customerList[numClient].id;
+    char typeClient = customerList[numClient].type;
+    int idClient = customerList[numClient].id;
     pthread_mutex_unlock(&mutexCustList);
+    
+    sprintf(nombre,"Cliente%c%d",typeClient,idClient);
 }
 
 int clientNotAttended(int numClient, int secondPassed){

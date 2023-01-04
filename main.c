@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 
     pthread_cond_init(&condDomRequest, NULL);       // initializes condition
 
-    logFile = fopen("log.txt", "w");                // opens log txt for writting (maybe changeable)
+    logFile = fopen("registroTiempos.log", "w");                // opens log txt for writting (maybe changeable)
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //CREACION TEMPORAL PARA PRUEBAS DE TECNICOS Y ENCARGADO

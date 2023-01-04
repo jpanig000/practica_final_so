@@ -53,7 +53,9 @@ techAction(struct technician tech){
     int atencion = 1; //numAleatorio(0-100);
     
     //escribir en log que se inicia la atencion
-                                                            
+    pthread_mutex_lock(&mutexFile);
+        writeLog("tech" + tech.type + tech.id, "the tech of type %s starts the attention to client %s", tech.type, client.id);
+    pthread_mutex_unlock(&mutexFile);                                                        
                                                             //dormir tiempo de atencion
     if(atencion > 0 && atencion < 10){
         sleep(0);// numAleatorio(2-6));                     //error de identificacion

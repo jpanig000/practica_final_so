@@ -6,3 +6,4 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <pthread.h>
+#include <string.h>

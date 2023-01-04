@@ -2,25 +2,23 @@
 
 void nuevoCliente(char type){
 
-    /*
-            NO FUNCIONA AÚN EL CÓDIGO
-    */
-    if(1){
-        printf("Aqui se crearía un nuevo cliente.\n");
-        return;
-    }
+    // ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
+    int clientNum = 20;     //Hay que cambiar esto para que valga lo mismo que lo que el usuario inserte.
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    int clientNum = 20;
-    short haveSpace = 0;    //If have no space 0, else the free space
+    int haveSpace = -1;    //If have no space -1, else the free space
+    
     pthread_mutex_lock(&mutexCustList);
-    for(int i=0; i<clientNum && haveSpace==0; i++){
+    for(int i=0; i<clientNum && haveSpace==-1; i++){
         if(customerList[i].id == 0){
             haveSpace = i;
         }
     }
-    if(haveSpace == 0){     //No space
+    
+    if(haveSpace == -1){     //No space
         pthread_mutex_unlock(&mutexCustList);
-        // Logger -> No hay espacio
+        printf("Espacio lleno, no se puede atender a mas clientes.\n");
+        printf("Logger -> No hay espacio\n");
     }else{                  //We create the new client
         switch (type){
         case 'A':
@@ -32,11 +30,10 @@ void nuevoCliente(char type){
             customerList[haveSpace].id = (netCustNum)*10 + 1;   //End at 1 for net clients
             break;
         default:
-            printf("ERROR");
-            // Logger -> Error, tipo de cliente erroneo
+            printf("Logger -> Error, tipo de cliente erroneo\n");
             break;
         }
-
+        
         customerList[haveSpace].isAttended = -1;
         customerList[haveSpace].type = type;
         customerList[haveSpace].solicited = 0;

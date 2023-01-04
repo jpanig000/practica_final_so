@@ -7,5 +7,5 @@ int clientNotAttended(int numClient, int secondPassed);
 void clientAttending(int numClient);
 void clientAttendedAndNetClient(int numClient);
 void clientDomiciliaryRequests(int numClient);
-void clientExit(int numClient);
+void clientExit(int numClient, char* reason);
 void clearClient(int numClient);

@@ -2,34 +2,26 @@
 
 void *accCliente(void *ptr){
 
-    /*
-            NO FUNCIONA AÚN EL CÓDIGO
-    */
-    if(1){
-        printf("Aqui se ejecutaría las acciones de un cliente con id %d.\n", customerList[*(int *)ptr].id);
-
-    }
-
-    // Logger -> hora entrada + tipo de cliente
-    // "Nuevo cliente tipo %c", customerList[*(int *)ptr].type
-
+    int numClient = *(int *) ptr;
+    
+    printf("Logger -> Nuevo cliente tipo %c con id %d\n", customerList[numClient].type, customerList[numClient].id);
 
     short secondPassed = 0;
     short attended;
 
     while(1){
         pthread_mutex_lock(&mutexCustList);
-        attended = customerList[*(int *)ptr].isAttended;
+        attended = customerList[numClient].isAttended;
         pthread_mutex_unlock(&mutexCustList);
 
         if(attended == -1){
-            secondPassed = clientNotAttended(*(int *)ptr, secondPassed);
+            secondPassed = clientNotAttended(numClient, secondPassed);
         }else if(attended == 0){
-            clientAttending(*(int *)ptr);
-        }else if(attended == 1 && (customerList[*(int *)ptr].type = 'N')){
-            clientAttendedAndNetClient(*(int *)ptr);
+            clientAttending(numClient);
+        }else if(attended == 1 && (customerList[numClient].type = 'N')){
+            clientAttendedAndNetClient(numClient);
         }else{
-            clientExit(*(int *)ptr);
+            clientExit(numClient, "Ya he sido atendido.");
         }
 
     }
@@ -39,14 +31,14 @@ int clientNotAttended(int numClient, int secondPassed){
     int clientConduct = 1/*aleatorio 1-100*/;
 
     if(clientConduct <= 10){            // 10% find difficult the app and leaves
-        clientExit(numClient);
+        clientExit(numClient, "Me parece dificil la aplicación.");
     }else if(clientConduct <=15){       // 5% lost the conexion of the app
-        clientExit(numClient);
+        clientExit(numClient, "Perdida de conexión.");
     }else{
         if(secondPassed == 8){
             secondPassed = 0;
             if(clientConduct <= 35){    // 20% every 8 seconds is tired and leaves the app
-                clientExit(numClient);
+                clientExit(numClient, "Me cansé de esperar.");
             }
         }
     }
@@ -64,7 +56,7 @@ void clientAttendedAndNetClient(int numClient){
     if( 30 <= 1/*aleatorio 1-30*/ ){     // 30% of net clients make a domiciliary requests
        clientDomiciliaryRequests(numClient);
     }else{
-        clientExit(numClient);
+        clientExit(numClient, "No quiero atención domiciliaria.");
     }
 }
 
@@ -76,7 +68,7 @@ void clientDomiciliaryRequests(int numClient){
         domSolsNum++;
         pthread_mutex_unlock(&mutexDomRequest);
 
-        // Logger -> Espero a ser atendido por atencion domiciliaria
+        printf("Logger -> %d Espero a ser atendido por atencion domiciliaria\n", customerList[numClient].id);
 
         pthread_mutex_lock(&mutexCustList);
         customerList[numClient].solicited = 1;
@@ -98,8 +90,8 @@ void clientDomiciliaryRequests(int numClient){
         }
         pthread_mutex_unlock(&mutexCustList);
 
-        // Logger -> Su atencion ha finalizado
-
+        printf("Logger -> %d Mi atencion ha finalizado\n", customerList[numClient].id);
+        clientExit(numClient, "Atención domiciliaria finalizada.");
     }else{
         pthread_mutex_unlock(&mutexDomRequest);
         sleep(3);
@@ -108,8 +100,8 @@ void clientDomiciliaryRequests(int numClient){
 }
 
 
-void clientExit(int numClient){
-    // Logger -> Se va el cliente %d, num
+void clientExit(int numClient, char* reason){
+    printf("Logger -> %d se va de la aplicacion por el motivo: %s\n", customerList[numClient].id, reason);
     clearClient(numClient);
     pthread_exit(NULL);
 }

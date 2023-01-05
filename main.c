@@ -36,36 +36,69 @@ int main(int argc, char *argv[]) {
 
     pthread_cond_init(&condDomRequest, NULL);       // initializes condition
 
-    logFile = fopen("registroTiempos.log", "w");                // opens log txt for writting (maybe changeable)
+    logFile = fopen("registroTiempos.log", "w");    // opens log file for writting (maybe changeable)
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //CREACION TEMPORAL PARA PRUEBAS DE TECNICOS Y ENCARGADO
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // creating app technicians
+    for (int i = 0; i < appTechsNum; i++) {
+        
+        struct technician newAppTech;
+        newAppTech.id = i;
+        newAppTech.type = 'A';
 
-    //estructura tecnico red
-    struct technician prueba;
-    prueba.id = 0;
-    prueba.type = 'A';
+        pthread_t newThread;
+        pthread_create(&newThread, NULL, accTecnico, &newAppTech);
 
-    pthread_t newPhread1;
-    pthread_create(&newPhread1, NULL, accTecnico, &prueba);
-
-    //estructura tecnico app
-    struct technician prueba1;
-    prueba1.id = 0;
-    prueba1.type = 'N';
+    }
     
-    pthread_t newPhread2;
-    pthread_create(&newPhread2, NULL, accTecnico, &prueba1);
+    // creating web technicians
+    for (int i = appTechsNum; i < appTechsNum+2; i++) {
 
-    pthread_t newPhread3;
-    pthread_create(&newPhread3, NULL, accEncargado, NULL);
-    //hilo encargago
+        struct technician newNetTech;
+        newNetTech.id = i;
+        newNetTech.type = 'N';
+
+        pthread_t newThread;
+        pthread_create(&newThread, NULL, accTecnico, &newNetTech);
+
+    }
+    
+    // creating eNcaRgAdO
+    pthread_t encargado;
+    pthread_create(&encargado, NULL, accEncargado, NULL);
+
+    // creating domiciliary technician
+    pthread_t domTech;
+    pthread_create(&domTech, NULL, accTecnicoDomiciliario, NULL);
+
+
+    // // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // // CREACION TEMPORAL PARA PRUEBAS DE TECNICOS Y ENCARGADO
+    // // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // //estructura tecnico red
+    // struct technician prueba;
+    // prueba.id = 0;
+    // prueba.type = 'A';
+
+    // pthread_t newPhread1;
+    // pthread_create(&newPhread1, NULL, accTecnico, &prueba);
+
+    // //estructura tecnico app
+    // struct technician prueba1;
+    // prueba1.id = 0;
+    // prueba1.type = 'N';
+    
+    // pthread_t newPhread2;
+    // pthread_create(&newPhread2, NULL, accTecnico, &prueba1);
+
+    // pthread_t newPhread3;
+    // pthread_create(&newPhread3, NULL, accEncargado, NULL);
+    // //hilo encargago
 
 
 
     while(1){
-        sleep(1);
+        pause();
     }
 
 }

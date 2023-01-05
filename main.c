@@ -115,3 +115,7 @@ void finish(int sig){                               //Finish the program
     //Finaliza todos los clientes en cola, ya no permite tener nuevas solicitudes
     
 }
+
+int calculaAleatorio(int min, int max) {        //calcula un num aleatorio entre min y max
+    return rand() % (max-min+1) + min;
+}

@@ -42,15 +42,15 @@ void techAction(struct technician tech){
                     }
                 }
             }
-        pthread_mutex_unlock(&mutexCustList);
-        
-        if (next.id != 0){
+        if (next.id == 0){
+            pthread_mutex_unlock(&mutexCustList);
             sleep(1);
+            pthread_mutex_lock(&mutexCustList);
         }
     }while(next.id == 0);
     
                                                             //cambiar condición a atendiendo
-    pthread_mutex_lock(&mutexCustList);
+    
         customerList[numNext].isAttended = 0;
     pthread_mutex_unlock(&mutexCustList);
 

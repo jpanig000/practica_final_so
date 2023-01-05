@@ -46,17 +46,16 @@ void manAction(){
                         }
                     }
                 }
-            }                                                            
-            
-        pthread_mutex_unlock(&mutexCustList);
+            }
         
-        if (next.id != 0){
+        if (next.id == 0){
+            pthread_mutex_unlock(&mutexCustList);
             sleep(3);
+            pthread_mutex_lock(&mutexCustList);
         }
     }while(next.id == 0);
     
                                                             //cambiar condición a atendiendo
-    pthread_mutex_lock(&mutexCustList);
         next.isAttended == 0;
     pthread_mutex_unlock(&mutexCustList);
 

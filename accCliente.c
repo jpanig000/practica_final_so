@@ -17,21 +17,27 @@ void *accCliente(void *ptr){
         attended = customerList[numClient].isAttended;
         pthread_mutex_unlock(&mutexCustList);
 
-        // printf("Attended: %d\n", attended);
-        if(attended == -1){
+        if(attended == -1){                 //The client haven't been attended
             secondPassed = clientNotAttended(numClient, secondPassed);
-        }else if(attended == 0){
+        }else if(attended == 0){            //The client is being attended
             clientAttending(numClient);
-        }else{
+        }else if(attended == 1){            //The client has been attended
             char type;
             pthread_mutex_lock(&mutexCustList);
             type = customerList[numClient].type;
             pthread_mutex_unlock(&mutexCustList);
-            if(attended == 1 && (type = 'N')){
+
+            if(type = 'N'){                 //The net clients could request a domiciliary technician
                 clientAttendedAndNetClient(numClient);
-            }else{
+            }else{                          //The app clients exit the plataform
                 clientExit(numClient, "Ya he sido atendido.");
             }
+        }else{                              //There is a error
+            char nombreCliente[200] = "";
+            nameClient(numClient, nombreCliente);
+            char mensaje[300] = "";
+            sprintf(mensaje,"ERROR: valor inadecuado de atendido en el cliente, debería ser -1, 0 o 1, y es:%d.", attended);
+            writeLog(nombreCliente, mensaje);
         }
 
     }
@@ -47,16 +53,16 @@ void nameClient(int numClient, char nombre[]){
 }
 
 int clientNotAttended(int numClient, int secondPassed){
-    int clientConduct = 50/*aleatorio 1-100*/;
+    int clientConduct = calculaAleatorio(1, 100);
 
-    if(clientConduct <= 10){            // 10% find difficult the app and leaves
+    if(clientConduct <= 10){                // 10% find difficult the app and leaves
         clientExit(numClient, "Me parece dificil la aplicación.");
-    }else if(clientConduct <=15){       // 5% lost the conexion of the app
+    }else if(clientConduct <=15){           // 5% lost the conexion of the app
         clientExit(numClient, "Perdida de conexión.");
     }else{
         if(secondPassed == 8){
             secondPassed = 0;
-            if(clientConduct <= 35){    // 20% every 8 seconds is tired and leaves the app
+            if(clientConduct <= 35){        // 20% every 8 seconds is tired and leaves the app
                 clientExit(numClient, "Me cansé de esperar.");
             }
         }
@@ -68,11 +74,11 @@ int clientNotAttended(int numClient, int secondPassed){
 }
 
 void clientAttending(int numClient){
-    sleep(2);                           // The client wait until the technician have end
+    sleep(2);                               // The client wait until the technician have end
 }
 
 void clientAttendedAndNetClient(int numClient){
-    if( 30 <= 1/*aleatorio 1-30*/ ){     // 30% of net clients make a domiciliary requests
+    if( 30 <= calculaAleatorio(1, 100) ){   // 30% of net clients make a domiciliary requests
        clientDomiciliaryRequests(numClient);
     }else{
         clientExit(numClient, "No quiero atención domiciliaria.");

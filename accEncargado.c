@@ -61,7 +61,7 @@ void manAction(){
     pthread_mutex_unlock(&mutexCustList);
 
                                                             //calcular numero aleatorio para tipo de atencion
-    int atencion = numAleatorio(0-100);
+    int atencion = calculaAleatorio(1, 100);
     
                                                             //escribir en log que se inicia la atencion
 
@@ -81,15 +81,15 @@ void manAction(){
                                                             
                                                             //dormir tiempo de atencion
     int fin ;
-    if(atencion > 0 && atencion < 10){
+    if(atencion > 0 && atencion <= 10){
         fin = 0;
-        sleep(numAleatorio(2-6));                     //error de identificacion
-    }else if(atencion > 10 && atencion < 20){
+        sleep(calculaAleatorio(2, 6));                     //error de identificacion
+    }else if(atencion > 10 && atencion <= 20){
         fin = 1;
-        sleep(numAleatorio(1-2));                     //compañia equivocada
-    }else if(atencion > 20 && atencion < 100){
+        sleep(calculaAleatorio(1, 2));                     //compañia equivocada
+    }else if(atencion > 20 && atencion <= 100){
         fin = 2;
-        sleep(numAleatorio(1-4));                     //todo en regla
+        sleep(calculaAleatorio(1, 4));                     //todo en regla
     }
     
                                                             //escribir en log que finaliza la atencion

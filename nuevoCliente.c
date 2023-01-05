@@ -35,7 +35,7 @@ void nuevoCliente(char type){
         customerList[haveSpace].isAttended = -1;
         customerList[haveSpace].type = type;
         customerList[haveSpace].solicited = 0;
-        customerList[haveSpace].priority=1/*aleatorio 1-10*/;
+        customerList[haveSpace].priority=calculaAleatorio(1, 10);
         pthread_t newPhread;
 	    pthread_create(&newPhread, NULL, accCliente, &haveSpace);
         pthread_mutex_unlock(&mutexCustList);

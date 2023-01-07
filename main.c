@@ -155,8 +155,17 @@ void finish(int sig){                               //Finish the program
         exit(-1);
     }
     
-    //Finaliza todos los clientes en cola, ya no permite tener nuevas solicitudes
-    
+    //Miro el numero de clientes
+    int numC = 0;
+    do{
+        sleep(1);
+        for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+            if (actual.id != 0){
+                numC = 1;
+            }
+        }  
+    while(numC == 1); 
+    kill(getpid(),SIGKILL);   
 }
 
 int calculaAleatorio(int min, int max) {        //calcula un num aleatorio entre min y max

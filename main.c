@@ -145,6 +145,16 @@ void finish(int sig){                               //Finish the program
         exit(-1);
     }
     
+    if(signal(SIGUSR1,SIG_IGN) == SIG_ERR){
+        perror("ERROR");
+        exit(-1);
+    }
+    
+    if(signal(SIGUSR2,SIG_IGN) == SIG_ERR){
+        perror("ERROR");
+        exit(-1);
+    }
+    
     //Finaliza todos los clientes en cola, ya no permite tener nuevas solicitudes
     
 }

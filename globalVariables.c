@@ -10,7 +10,8 @@ struct customer *customerList;       // customers list
 
 int appCustNum;     // type app customers counter
 int netCustNum;     // type net customers counter
-int domSolsNum;     // domiciliary requests number
+int domSolsNum;     // domiciliary requests counter
+int techAppNum;     // type app technicians counter
 
 pthread_mutex_t mutexFile;              // mutex for file access
 pthread_mutex_t mutexCustList;          // mutex for customer list access

@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2: num tecnicos de app
 
     int clientNum = 20;     // número de clientes
-    int techAppNum = 2;    // número de técnicos de app
+    techAppNum = 2;    // número de técnicos de app
 
     /*
         Control de parámetros
@@ -174,14 +174,15 @@ void addAppTechs() {
     if(new_techAppNum<=techAppNum) {
         printf("El número de técnicos de tipo app debe ser mayor que el actual.\n");
     } else {
+        struct technician newTech[new_techAppNum-techAppNum];
         for(int i=techAppNum+2; i<new_techAppNum+2; i++) {
-            struct technician newAppTech;
-            newAppTech.id = i;
-            newAppTech.type = 'A';
+            newTech[i-techAppNum-2].id = i;
+            newTech[i-techAppNum-2].type = 'A';
 
             pthread_t newThread;
-            pthread_create(&newThread, NULL, accTecnico, &newAppTech);
+            pthread_create(&newThread, NULL, accTecnico, &newTech[i-techAppNum-2]);
         }
+        techAppNum=new_techAppNum;
     }
 
 }

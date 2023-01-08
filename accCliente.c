@@ -28,7 +28,6 @@ void *accCliente(void *ptr){
             pthread_mutex_unlock(&mutexCustList);
 
             if(type == 'N'){                 //The net clients could request a domiciliary technician
-                printf("%c %c\n",customerList[numClient].type, type);
                 clientAttendedAndNetClient(numClient);
             }else{                          //The app clients exit the plataform
                 clientExit(numClient, "I have been attended.");

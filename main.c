@@ -40,27 +40,26 @@ int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2:
 
     logFile = fopen("registroTiempos.log", "w");    // opens log file for writting (maybe changeable)
 
+    struct technician newTech[techAppNum+2];
     // creating app technicians
     for (int i = 0; i < techAppNum; i++) {
         
-        struct technician newAppTech;
-        newAppTech.id = i;
-        newAppTech.type = 'A';
+        newTech[i].id= i;
+        newTech[i].type = 'A';
 
         pthread_t newThread;
-        pthread_create(&newThread, NULL, accTecnico, &newAppTech);
+        pthread_create(&newThread, NULL, accTecnico, &newTech[i]);
 
     }
     
     // creating web technicians
     for (int i = techAppNum; i < techAppNum+2; i++) {   // para empezar a partir de los tecnicos ya creados
                                                         //  y que la id sea única
-        struct technician newNetTech;
-        newNetTech.id = i;
-        newNetTech.type = 'N';
+        newTech[i].id= i;
+        newTech[i].type = 'N';
 
         pthread_t newThread;
-        pthread_create(&newThread, NULL, accTecnico, &newNetTech);
+        pthread_create(&newThread, NULL, accTecnico, &newTech[i]);
 
     }
     

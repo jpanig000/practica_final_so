@@ -1,9 +1,9 @@
 struct customer {   // struct representing customers
-    int id;         // End at 0 for app, 1 for net
+    int id;         // End at even for app, odd for net
     int isAttended; // -1 if is not, 0 if atending, 1 atended
     char type;      // 'A' for app, 'N' for net
     int priority;   
-    int solicited;  // 1 if they have solicited domiciliary attention
+    int solicited;  // -1 if the customer has the wrong company, 1 if they have solicited domiciliary attention
 };
 
 struct customer customerList[20];       // customers list

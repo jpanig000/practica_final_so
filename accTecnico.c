@@ -83,6 +83,10 @@ void techAction(struct technician tech){
         sleep(calculaAleatorio(2, 6));                     //error de identificacion
     }else if(atencion > 10 && atencion <= 20){
         fin = 1;
+        pthread_mutex_lock(&mutexCustList);
+            customerList[numNext].solicited = -1;          //the customer can´t solicity dom att
+        pthread_mutex_unlock(&mutexCustList);
+
         sleep(calculaAleatorio(1, 2));                     //compañia equivocada
     }else if(atencion > 20 && atencion <= 100){
         fin = 2;

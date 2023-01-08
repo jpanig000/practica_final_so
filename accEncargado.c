@@ -13,27 +13,31 @@ void manAction(){
     next.isAttended = -1;
     next.priority = 0;
     
+    int numNext=-1;
+
     do{
         pthread_mutex_lock(&mutexCustList);
 
                                                             //seleccionar el siguiente cliente
                                                             //primero busca clientes de tipo red
-            for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+            for(int i = 0; i <malloc_usable_size(customerList) / sizeof(struct customer); i++){
                 struct customer actual = customerList[i];
                 if (actual.id != 0 && actual.isAttended == -1){
 
                     if (actual.type == 'N'){
                         if (actual.priority > next.priority){
                         next = actual;
+                        numNext = i;
                         }else if(actual.id < next.id) {
                         next = actual;
+                        numNext = i;
                         }    
                     }
                 }
             }
                                                             //en caso de no encontrar clientes de red busca clientes de app
             if (next.id != 0){
-                for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+                for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
                     struct customer actual = customerList[i];
                     if (actual.id != 0 && actual.isAttended == -1){
 
@@ -51,12 +55,11 @@ void manAction(){
         if (next.id == 0){
             pthread_mutex_unlock(&mutexCustList);
             sleep(3);
-            pthread_mutex_lock(&mutexCustList);
         }
     }while(next.id == 0);
     
                                                             //cambiar condición a atendiendo
-        next.isAttended == 0;
+        customerList[numNext].isAttended = 0;
     pthread_mutex_unlock(&mutexCustList);
 
                                                             //calcular numero aleatorio para tipo de atencion
@@ -115,7 +118,7 @@ void manAction(){
     pthread_mutex_unlock(&mutexFile);
                                                             //cambiar atendido
     pthread_mutex_lock(&mutexCustList);
-        next.isAttended == 0;
+        customerList[numNext].isAttended = 0;
     pthread_mutex_unlock(&mutexCustList);
 
 }

@@ -225,17 +225,25 @@ void finish(int sig){                               //Finish the program
     
     // Hago que si no han pedido el servicio tecnico domiciliario no puedan pedirlo
     pthread_mutex_lock(&mutexCustList);
-    for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
+        for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
             if(customerList[i].solicited==0){
                 customerList[i].solicited=-1;
             }
-    }  
+        }  
     pthread_mutex_unlock(&mutexCustList);
+    
+    
 
     //Dom tec atiende a todos los que estaban esperando
     pthread_mutex_lock(&mutexDomRequest);
-    pthread_cond_signal(&condDomRequest);
+    int sols = domSolsNum;
     pthread_mutex_unlock(&mutexDomRequest);
+    if(sols>0){
+        pthread_mutex_lock(&mutexDomRequest);
+        pthread_cond_signal(&condDomRequest);
+        pthread_mutex_unlock(&mutexDomRequest);
+    }
+    
 
     //Miro el numero de clientes
     int numC = 0;

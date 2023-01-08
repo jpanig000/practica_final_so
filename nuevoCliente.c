@@ -23,12 +23,10 @@ void nuevoCliente(char type){
         switch (type){
             case 'A':
                 appCustNum++;
-                // customerList[haveSpace].id = (appCustNum)*10 + 0;   //End at 0 for app clients
-                customerList[haveSpace].id = (appCustNum)*2;   //Even number for app clients
+                customerList[haveSpace].id = (appCustNum)*2;     //Even number for app clients
                 break;
             case 'N':
                 netCustNum++;
-                // customerList[haveSpace].id = (netCustNum)*10 + 1;   //End at 1 for net clients
                 customerList[haveSpace].id = (netCustNum)*2-1;   //Odd number for net clients
                 break;
             default:

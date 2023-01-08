@@ -97,6 +97,9 @@ void tecDom(){
     pthread_mutex_lock(&mutexDomRequest);
 
     pthread_cond_signal(&condDomRequest);
+    pthread_cond_signal(&condDomRequest);
+    pthread_cond_signal(&condDomRequest);
+    pthread_cond_signal(&condDomRequest);
     
     pthread_mutex_unlock(&mutexDomRequest);
     

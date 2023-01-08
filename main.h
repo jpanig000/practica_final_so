@@ -7,7 +7,8 @@ void newClientApp(int sig);
 void newClientNetwork(int sig);
 int calculaAleatorio(int min, int max);
 void changeCustomerList();
-                                                            
+void addAppTechs();
+                                
 //nuevoCliente
 void finish(int sig);
 void nuevoCliente(char type);

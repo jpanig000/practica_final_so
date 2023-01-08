@@ -8,7 +8,6 @@ struct customer {   // struct representing customers
 
 struct customer *customerList;       // customers list
 
-
 int appCustNum;     // type app customers counter
 int netCustNum;     // type net customers counter
 int domSolsNum;     // domiciliary requests number

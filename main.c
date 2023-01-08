@@ -118,7 +118,44 @@ void declareHandlers() {
         perror("Error con SIGINT");
         exit(-1);
     }
+    if(signal(SIGPIPE, changeCustomerList) == SIG_ERR) {
+        perror("Error con SIGPIPE");
+        exit(-1);
+    }
     //Declarador de las manejadores
+}
+
+void changeCustomerList() {
+
+    if(signal(SIGPIPE, changeCustomerList) == SIG_ERR) {
+        perror("Error con SIGPIPE");
+        exit(-1);
+    }
+
+    printf("Introduzca el número de clientes permitido a partir de este momento.\n");
+    int numCustomers=0;
+
+    scanf("%d", &numCustomers);
+    int tamActual = malloc_usable_size(customerList) / sizeof(struct customer);
+
+    if(numCustomers < tamActual) {
+        printf("El tamaño solo puede aumentar, no disminuir.\n");
+    } else if(numCustomers == tamActual) {
+        printf("Ese es el número de clientes ya permitidos actualmente. No se modifica nada.\n");
+    } else {
+        pthread_mutex_lock(&mutexCustList);
+
+        struct customer *new_customerList;
+        new_customerList = (struct customer *) malloc(numCustomers * sizeof(struct customer));
+
+        memcpy(new_customerList, customerList, numCustomers * sizeof(struct customer));
+
+        customerList = new_customerList;
+
+        printf("Número máximo de clientes permitidos modificado.\n");
+
+        pthread_mutex_unlock(&mutexCustList);
+    }
 }
 
 void newClientApp(int sig){                         //New client with problems with the app                       

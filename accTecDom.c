@@ -40,7 +40,7 @@ void tecDom(){
                 next = actual;
             }
             pos = pos + 1;
-            if(pos == 20){
+            if(pos == malloc_usable_size(customerList) / sizeof(struct customer)){
                 pos = 0;
             }    
         }while(next.id == 0);

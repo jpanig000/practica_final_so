@@ -2,8 +2,8 @@
 void nuevoCliente(char type){
 
     
-    int clientNum = sizeof(customerList)/sizeof(struct customer);
-
+    int clientNum = malloc_usable_size(customerList) / sizeof(struct customer);
+    
     int haveSpace = -1;    //If have no space -1, else the free space
     
     pthread_mutex_lock(&mutexCustList);

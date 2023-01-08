@@ -7,3 +7,4 @@
 #include <sys/wait.h>
 #include <pthread.h>
 #include <string.h>
+#include <malloc.h>

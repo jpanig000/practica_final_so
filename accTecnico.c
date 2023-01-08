@@ -30,7 +30,7 @@ void techAction(struct technician tech){
         pthread_mutex_lock(&mutexCustList);
 
                                                             //seleccionar el siguiente cliente
-            for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+            for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
                 struct customer actual = customerList[i];
                 if (actual.id != 0 && actual.isAttended == -1 && actual.type == tech.type){
                     if (actual.priority > next.priority){

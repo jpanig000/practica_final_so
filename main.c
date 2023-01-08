@@ -229,7 +229,7 @@ void finish(int sig){                               //Finish the program
     do{
         numC = 0;
         sleep(1);
-        for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+        for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
             pthread_mutex_lock(&mutexCustList);
             actual = customerList[i];
             pthread_mutex_unlock(&mutexCustList);

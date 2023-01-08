@@ -20,7 +20,7 @@ void manAction(){
 
                                                             //seleccionar el siguiente cliente
                                                             //primero busca clientes de tipo red
-            for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+            for(int i = 0; i <malloc_usable_size(customerList) / sizeof(struct customer); i++){
                 struct customer actual = customerList[i];
                 if (actual.id != 0 && actual.isAttended == -1){
 
@@ -37,7 +37,7 @@ void manAction(){
             }
                                                             //en caso de no encontrar clientes de red busca clientes de app
             if (next.id != 0){
-                for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+                for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
                     struct customer actual = customerList[i];
                     if (actual.id != 0 && actual.isAttended == -1){
 

@@ -70,7 +70,7 @@ void tecDom(){
         //Poner flag de solicitud a 0
         pthread_mutex_lock(&mutexCustList);
         
-        customerList[pos].solicited = 0;
+        customerList[pos - 1].solicited = 0;
         
         pthread_mutex_unlock(&mutexCustList);
     }

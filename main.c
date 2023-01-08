@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2: num tecnicos de app
 
     int clientNum = 20;     // número de clientes
-    int appTechsNum = 2;    // número de técnicos de app
+    int techAppNum = 2;    // número de técnicos de app
 
     /*
         Control de parámetros
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2:
             return 0;
         }
         clientNum = atoi(argv[1]);
-        appTechsNum = atoi(argv[2]);
+        techAppNum = atoi(argv[2]);
     } else if(argc == 2) {
         if(atoi(argv[1])<1) {
             printf("El parámetro del programa deben ser un número positivo.\n");
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2:
     logFile = fopen("registroTiempos.log", "w");    // opens log file for writting (maybe changeable)
 
     // creating app technicians
-    for (int i = 0; i < appTechsNum; i++) {
+    for (int i = 0; i < techAppNum; i++) {
         
         struct technician newAppTech;
         newAppTech.id = i;
@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2:
     }
     
     // creating web technicians
-    for (int i = appTechsNum; i < appTechsNum+2; i++) {
-
+    for (int i = techAppNum; i < techAppNum+2; i++) {   // para empezar a partir de los tecnicos ya creados
+                                                        //  y que la id sea única
         struct technician newNetTech;
         newNetTech.id = i;
         newNetTech.type = 'N';
@@ -122,6 +122,10 @@ void declareHandlers() {
         perror("Error con SIGPIPE");
         exit(-1);
     }
+    if(signal(SIGQUIT, addAppTechs) == SIG_ERR) {
+        perror("Error con SIGQUIT");
+        exit(-1);
+    }
     //Declarador de las manejadores
 }
 
@@ -156,6 +160,31 @@ void changeCustomerList() {
 
         pthread_mutex_unlock(&mutexCustList);
     }
+}
+
+void addAppTechs() {
+    if(signal(SIGQUIT, addAppTechs) == SIG_ERR) {
+        perror("Error con SIGQUIT");
+        exit(-1);
+    }
+
+    printf("Introduzca el número de técnicos de tipo app que desee.\n");
+    int new_techAppNum=0;
+    scanf("%d", &new_techAppNum);
+
+    if(new_techAppNum<=techAppNum) {
+        printf("El número de técnicos de tipo app debe ser mayor que el actual.\n");
+    } else {
+        for(int i=techAppNum+2; i<new_techAppNum+2; i++) {
+            struct technician newAppTech;
+            newAppTech.id = i;
+            newAppTech.type = 'A';
+
+            pthread_t newThread;
+            pthread_create(&newThread, NULL, accTecnico, &newAppTech);
+        }
+    }
+
 }
 
 void newClientApp(int sig){                         //New client with problems with the app                       

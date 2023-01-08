@@ -157,14 +157,19 @@ void finish(int sig){                               //Finish the program
     
     //Miro el numero de clientes
     int numC = 0;
+    struct customer actual;
     do{
+        numC = 0;
         sleep(1);
         for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+            pthread_mutex_lock(&mutexCustList);
+            actual = customerList[i];
+            pthread_mutex_unlock(&mutexCustList);
             if (actual.id != 0){
                 numC = 1;
             }
         }  
-    while(numC == 1); 
+    }while(numC == 1); 
     kill(getpid(),SIGKILL);   
 }
 

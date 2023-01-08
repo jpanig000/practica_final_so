@@ -51,7 +51,6 @@ void manAction(){
         if (next.id == 0){
             pthread_mutex_unlock(&mutexCustList);
             sleep(3);
-            pthread_mutex_lock(&mutexCustList);
         }
     }while(next.id == 0);
     

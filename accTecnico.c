@@ -45,7 +45,6 @@ void techAction(struct technician tech){
         if (next.id == 0){
             pthread_mutex_unlock(&mutexCustList);
             sleep(1);
-            pthread_mutex_lock(&mutexCustList);
         }
     }while(next.id == 0);
     

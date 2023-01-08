@@ -172,6 +172,7 @@ void finish(int sig){                               //Finish the program
             }
         }  
     }while(numC == 1); 
+    free(customerList);
     kill(getpid(),SIGKILL);   
 }
 

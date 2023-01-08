@@ -15,21 +15,27 @@ void nuevoCliente(char type){
     
     if(haveSpace == -1){     //No space
         pthread_mutex_unlock(&mutexCustList);
-        printf("Espacio lleno, no se puede atender a mas clientes.\n");
-        printf("Logger -> No hay espacio\n");
+
+        pthread_mutex_lock(&mutexFile);
+        writeLog("New Client","Can't enter, full space.");
+        pthread_mutex_unlock(&mutexFile);
     }else{                  //We create the new client
         switch (type){
-        case 'A':
-            appCustNum++;
-            customerList[haveSpace].id = (appCustNum)*10 + 0;   //End at 0 for app clients
-            break;
-        case 'N':
-            netCustNum++;
-            customerList[haveSpace].id = (netCustNum)*10 + 1;   //End at 1 for net clients
-            break;
-        default:
-            printf("Logger -> Error, tipo de cliente erroneo\n");
-            break;
+            case 'A':
+                appCustNum++;
+                // customerList[haveSpace].id = (appCustNum)*10 + 0;   //End at 0 for app clients
+                customerList[haveSpace].id = (appCustNum)*2;   //Even number for app clients
+                break;
+            case 'N':
+                netCustNum++;
+                // customerList[haveSpace].id = (netCustNum)*10 + 1;   //End at 1 for net clients
+                customerList[haveSpace].id = (netCustNum)*2-1;   //Odd number for net clients
+                break;
+            default:
+                pthread_mutex_lock(&mutexFile);
+                writeLog("New Client","ERROR TYPE.");
+                pthread_mutex_unlock(&mutexFile);
+                break;
         }
         
         customerList[haveSpace].isAttended = -1;

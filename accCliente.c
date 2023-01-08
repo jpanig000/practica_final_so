@@ -6,7 +6,7 @@ void *accCliente(void *ptr){
     char name[200] = "";
     nameClient(numClient, name);
     pthread_mutex_lock(&mutexFile);
-    writeLog(name,"Nuevo cliente.");
+    writeLog(name,"New client.");
     pthread_mutex_unlock(&mutexFile);
 
     short secondPassed = 0;
@@ -30,14 +30,16 @@ void *accCliente(void *ptr){
             if(type = 'N'){                 //The net clients could request a domiciliary technician
                 clientAttendedAndNetClient(numClient);
             }else{                          //The app clients exit the plataform
-                clientExit(numClient, "Ya he sido atendido.");
+                clientExit(numClient, "I have been attended.");
             }
         }else{                              //There is a error
             char nombreCliente[200] = "";
             nameClient(numClient, nombreCliente);
             char mensaje[300] = "";
-            sprintf(mensaje,"ERROR: valor inadecuado de atendido en el cliente, debería ser -1, 0 o 1, y es:%d.", attended);
+            sprintf(mensaje,"ERROR: wrong value, customer is attended must be -1, 0 or 1. And it is :%d.", attended);
+            pthread_mutex_lock(&mutexFile);
             writeLog(nombreCliente, mensaje);
+            pthread_mutex_unlock(&mutexFile);
         }
 
     }
@@ -49,21 +51,21 @@ void nameClient(int numClient, char nombre[]){
     int idClient = customerList[numClient].id;
     pthread_mutex_unlock(&mutexCustList);
 
-    sprintf(nombre,"Cliente%c%d",typeClient,idClient);
+    sprintf(nombre,"Client%c%d",typeClient,idClient);
 }
 
 int clientNotAttended(int numClient, int secondPassed){
     int clientConduct = calculaAleatorio(1, 100);
 
     if(clientConduct <= 10){                // 10% find difficult the app and leaves
-        clientExit(numClient, "Me parece dificil la aplicación.");
+        clientExit(numClient, "I find difficult the app.");
     }else if(clientConduct <=15){           // 5% lost the conexion of the app
-        clientExit(numClient, "Perdida de conexión.");
+        clientExit(numClient, "I have lost conexion.");
     }else{
         if(secondPassed == 8){
             secondPassed = 0;
             if(clientConduct <= 35){        // 20% every 8 seconds is tired and leaves the app
-                clientExit(numClient, "Me cansé de esperar.");
+                clientExit(numClient, "I'm tired of waiting.");
             }
         }
     }
@@ -81,7 +83,7 @@ void clientAttendedAndNetClient(int numClient){
     if( 30 <= calculaAleatorio(1, 100) ){   // 30% of net clients make a domiciliary requests
        clientDomiciliaryRequests(numClient);
     }else{
-        clientExit(numClient, "No quiero atención domiciliaria.");
+        clientExit(numClient, "I don't want domiciliary attention.");
     }
 }
 
@@ -96,7 +98,7 @@ void clientDomiciliaryRequests(int numClient){
         char name2[100] = "";
         nameClient(numClient, name2);
         pthread_mutex_lock(&mutexFile);
-        writeLog(name2,"Espero a ser atendido por atencion domiciliaria");
+        writeLog(name2,"Waiting to be attended for a domiciliry technician.");
         pthread_mutex_unlock(&mutexFile);
 
         pthread_mutex_lock(&mutexCustList);
@@ -112,7 +114,7 @@ void clientDomiciliaryRequests(int numClient){
         }
 
         pthread_mutex_lock(&mutexCustList);
-        while(customerList[numClient].solicited == 0){
+        while(customerList[numClient].solicited != 0){
             pthread_mutex_unlock(&mutexCustList);
             pthread_cond_wait(&condDomRequest, &mutexDomRequest);
             pthread_mutex_lock(&mutexCustList);
@@ -123,10 +125,10 @@ void clientDomiciliaryRequests(int numClient){
         nameClient(numClient, name);
 
         pthread_mutex_lock(&mutexFile);
-        writeLog(name,"Mi atencion ha finalizado");
+        writeLog(name,"My domiciliary attention has been completed.");
         pthread_mutex_unlock(&mutexFile);
 
-        clientExit(numClient, "Atención domiciliaria finalizada.");
+        clientExit(numClient, "Domiciliary attention have ended.");
     }else{
         pthread_mutex_unlock(&mutexDomRequest);
         sleep(3);
@@ -140,7 +142,7 @@ void clientExit(int numClient, char* reason){
     char name[100] = "";
     nameClient(numClient, name);
 
-    char mensaje[100] = "se va de la aplicacion por el motivo: ";
+    char mensaje[100] = "Exit the app because: ";
     strcat(mensaje, reason);
 
     pthread_mutex_lock(&mutexFile);

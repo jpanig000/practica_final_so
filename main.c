@@ -30,6 +30,8 @@ int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2:
 
     declareHandlers();                              // declares handlers for SIGUSR1, SIGUSR2 and SIGINT
 
+    customerList = (struct customer *) malloc(clientNum * sizeof(struct customer));
+
     pthread_mutex_init(&mutexFile, NULL);           //  
     pthread_mutex_init(&mutexCustList, NULL);       // initializes all mutexs
     pthread_mutex_init(&mutexDomRequest, NULL);     //

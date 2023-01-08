@@ -6,8 +6,9 @@ struct customer {   // struct representing customers
     int solicited;  // -1 if the the customer cant solicity dom att, 1 if they have solicited domiciliary attention
 };
 
-struct customer customerList[20];       // customers list
+struct customer *customerList;       // customers list
 
+int techAppNum;     // type app technicians counter
 int appCustNum;     // type app customers counter
 int netCustNum;     // type net customers counter
 int domSolsNum;     // domiciliary requests number

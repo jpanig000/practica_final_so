@@ -88,9 +88,7 @@ void clientAttendedAndNetClient(int numClient){
 }
 
 void clientDomiciliaryRequests(int numClient){
-
     pthread_mutex_lock(&mutexDomRequest);
-
     if(domSolsNum<4){
         domSolsNum++;
         pthread_mutex_unlock(&mutexDomRequest);
@@ -116,9 +114,13 @@ void clientDomiciliaryRequests(int numClient){
         pthread_mutex_lock(&mutexCustList);
         while(customerList[numClient].solicited != 0){
             pthread_mutex_unlock(&mutexCustList);
+            
             pthread_cond_wait(&condDomRequest, &mutexDomRequest);
+
             pthread_mutex_lock(&mutexCustList);
         }
+
+        pthread_mutex_unlock(&mutexDomRequest);
         pthread_mutex_unlock(&mutexCustList);
 
         char name[100] = "";

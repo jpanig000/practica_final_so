@@ -2,7 +2,7 @@
 #include "main.h"
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2: num tecnicos de app
 
     int clientNum = 20;     // número de clientes
     int appTechsNum = 2;    // número de técnicos de app
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
             return 0;
         }
         clientNum = atoi(argv[1]);
-    } else if(argc == 1) {} else {
+    } else if(argc == 1) {/*si no hay parámetros*/} else {
         printf("El programa solo admite dos parámetros: el número máximo de clientes y el número"); 
         printf(" de técnicos de tipo app.\n");
     }

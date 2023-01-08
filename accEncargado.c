@@ -13,6 +13,8 @@ void manAction(){
     next.isAttended = -1;
     next.priority = 0;
     
+    int numNext=-1;
+
     do{
         pthread_mutex_lock(&mutexCustList);
 
@@ -25,8 +27,10 @@ void manAction(){
                     if (actual.type == 'N'){
                         if (actual.priority > next.priority){
                         next = actual;
+                        numNext = i;
                         }else if(actual.id < next.id) {
                         next = actual;
+                        numNext = i;
                         }    
                     }
                 }
@@ -55,7 +59,7 @@ void manAction(){
     }while(next.id == 0);
     
                                                             //cambiar condición a atendiendo
-        next.isAttended == 0;
+        customerList[numNext].isAttended = 0;
     pthread_mutex_unlock(&mutexCustList);
 
                                                             //calcular numero aleatorio para tipo de atencion
@@ -114,7 +118,7 @@ void manAction(){
     pthread_mutex_unlock(&mutexFile);
                                                             //cambiar atendido
     pthread_mutex_lock(&mutexCustList);
-        next.isAttended == 0;
+        customerList[numNext].isAttended = 0;
     pthread_mutex_unlock(&mutexCustList);
 
 }

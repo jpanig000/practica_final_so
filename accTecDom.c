@@ -24,7 +24,7 @@ void tecDom(){
     pthread_mutex_unlock(&mutexFile);
     
     
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < domSolsNum; i++){
         
         struct customer next;
         next.id = 0;

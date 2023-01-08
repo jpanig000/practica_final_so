@@ -19,7 +19,7 @@ void tecDom(){
     //Guardamos en el log que comienza la atencion
     pthread_mutex_lock(&mutexFile);
     
-    writeLog("tecDom"," has begun the domiciliary attention");
+    writeLog("tecDom","has begun the domiciliary attention");
     
     pthread_mutex_unlock(&mutexFile);
     
@@ -88,7 +88,7 @@ void tecDom(){
     //Guardamos en el log que se ha finalizado la solicitud domiciliaria    
     pthread_mutex_lock(&mutexFile);
     
-    writeLog("tecDom"," has finished the domiciliary attention");
+    writeLog("tecDom","has finished the domiciliary attention");
     
     pthread_mutex_unlock(&mutexFile);
     

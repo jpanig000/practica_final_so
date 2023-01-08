@@ -6,6 +6,7 @@ void declareHandlers();
 void newClientApp(int sig);
 void newClientNetwork(int sig);
 int calculaAleatorio(int min, int max);
+void changeCustomerList();
                                                             
 //nuevoCliente
 void finish(int sig);

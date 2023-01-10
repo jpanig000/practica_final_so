@@ -28,7 +28,7 @@ void tecDom(){
     //Guardamos en el log que comienza la atencion
     pthread_mutex_lock(&mutexFile);
     
-    writeLog("tecDom","has begun the domiciliary attention");
+    writeLog("tecDom","Has begun the domiciliary attention.");
     
     pthread_mutex_unlock(&mutexFile);
     
@@ -65,7 +65,7 @@ void tecDom(){
         pthread_mutex_lock(&mutexFile);
         
         //Concateno la cadena con el id del cliente 
-        char dest[30] = "has served the client";
+        char dest[30] = "Has served the client";
         char anad[10];
         int num = next.id;
         sprintf(anad, "%d", num);
@@ -97,7 +97,7 @@ void tecDom(){
     //Guardamos en el log que se ha finalizado la solicitud domiciliaria    
     pthread_mutex_lock(&mutexFile);
     
-    writeLog("tecDom","has finished the domiciliary attention");
+    writeLog("tecDom","Has finished the domiciliary attention.");
     
     pthread_mutex_unlock(&mutexFile);
     

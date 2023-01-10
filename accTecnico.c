@@ -17,10 +17,12 @@ void *accTecnico(void *techPointer){
         techAction(tech);
         if(tech.type == 'A'){
             if(counter == 5){
+                counter = 0;
                 sleep(5);
             }
         }else{
             if(counter == 6){
+                counter = 0;
                 sleep(5);
             }
         }
@@ -33,7 +35,7 @@ void techAction(struct technician tech){
     next.isAttended = -1;
     next.priority = 0;
     
-    int numNext=-1;
+    int numNext = -1;
 
     do{
         pthread_mutex_lock(&mutexCustList);
@@ -45,7 +47,7 @@ void techAction(struct technician tech){
                     if (actual.priority > next.priority){
                         next = actual;
                         numNext = i;
-                    }else if(actual.id < next.id) {
+                    }else if(actual.priority == next.priority && actual.id < next.id) {
                         next = actual;
                         numNext = i;
                     }
@@ -70,13 +72,13 @@ void techAction(struct technician tech){
     char id[100];
     char number[] = "";
     
-    sprintf(id,"tech%c%d",tech.type,tech.id);
+    sprintf(id,"Tech%c%d",tech.type,tech.id);
     
     char idCli[100] = "";
 
-    sprintf(idCli,"%d",next.id);
+    sprintf(idCli,"%d.",next.id);
 
-    char message[] = "the tech starts attending to client ";
+    char message[] = "The tech starts attending to client ";
 
     strcat(message, idCli);
 
@@ -103,7 +105,7 @@ void techAction(struct technician tech){
     
                                                             //escribir en log que finaliza la atencion
 
-    char message1[] = "the tech finalized the attention to client ";
+    char message1[] = "The tech finalized the attention to client ";
     strcat(message1, idCli);
 
     pthread_mutex_lock(&mutexFile);
@@ -112,13 +114,13 @@ void techAction(struct technician tech){
     
                                                             //escribir en log motivo de finalización
     
-    char message2[] = "the action finalized because ";
+    char message2[] = "The action finalized because ";
     if(fin == 0){
-        strcat(message2, "it was an autentication error");
+        strcat(message2, "it was an autentication error.");
     }else if(fin == 1){
-        strcat(message2, "the customer has the wrong company");
+        strcat(message2, "the customer has the wrong company.");
     }else if(fin == 2){
-        strcat(message2, "the customer was atended correctly");
+        strcat(message2, "the customer was atended correctly.");
     }
     
 
@@ -130,5 +132,6 @@ void techAction(struct technician tech){
     pthread_mutex_lock(&mutexCustList);
         customerList[numNext].isAttended = 1;
     pthread_mutex_unlock(&mutexCustList);
-
+    
+    counter++;
 }

@@ -140,9 +140,10 @@ void changeCustomerList() {
 
         customerList = new_customerList;
 
-        printf("Número máximo de clientes permitidos modificado.\n");
-
         pthread_mutex_unlock(&mutexCustList);
+
+        printf("Número máximo de clientes permitidos modificado.\n");
+        
     }
 }
 

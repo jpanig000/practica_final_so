@@ -35,26 +35,28 @@ void manAction(){
 
                     if (actual.type == 'N'){
                         if (actual.priority > next.priority){
-                        next = actual;
-                        numNext = i;
-                        }else if(actual.id < next.id) {
-                        next = actual;
-                        numNext = i;
+                            next = actual;
+                            numNext = i;
+                        }else if(actual.priority == next.priority && actual.id < next.id) {
+                            next = actual;
+                            numNext = i;
                         }    
                     }
                 }
             }
                                                             //en caso de no encontrar clientes de red busca clientes de app
-            if (next.id != 0){
+            if (next.id == 0){
                 for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
                     struct customer actual = customerList[i];
                     if (actual.id != 0 && actual.isAttended == -1){
 
                         if (actual.type == 'A'){
                             if (actual.priority > next.priority){
-                            next = actual;
-                            }else if(actual.id < next.id) {
-                            next = actual;
+                                next = actual;
+                                numNext = i;
+                            }else if(actual.priority == next.priority && actual.id < next.id) {
+                                next = actual;
+                                numNext = i;
                             }    
                         }
                     }
@@ -76,13 +78,13 @@ void manAction(){
     
                                                             //escribir en log que se inicia la atencion
 
-        char id[100] = "man";
+        char id[100] = "Man";
     
     char idCli[100] = "";
 
-    sprintf(idCli,"%d",next.id);
+    sprintf(idCli,"%d.",next.id);
 
-    char message[] = "starts attending client ";
+    char message[] = "Starts attending client ";
 
     strcat(message, idCli);
 
@@ -104,7 +106,7 @@ void manAction(){
     }
     
                                                             //escribir en log que finaliza la atencion
-    char message1[] = "finalized finalized the attention to client ";
+    char message1[] = "Finalized finalized the attention to client ";
     strcat(message1, idCli);
 
     pthread_mutex_lock(&mutexFile);
@@ -112,13 +114,13 @@ void manAction(){
     pthread_mutex_unlock(&mutexFile); 
 
                                                             //escribir en log motivo de finalización
-    char message2[] = "the action finalized because ";
+    char message2[] = "The action finalized because ";
     if(fin == 0){
-        strcat(message2, "it was an autentication error");
+        strcat(message2, "it was an autentication error.");
     }else if(fin == 1){
-        strcat(message2, "the customer has the wrong company");
+        strcat(message2, "the customer has the wrong company.");
     }else if(fin == 2){
-        strcat(message2, "the customer was atended correctly");
+        strcat(message2, "the customer was atended correctly.");
     }
     
 

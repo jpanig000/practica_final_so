@@ -1,3 +1,12 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
+
 void *accTecnicoDomiciliario(){
     
     while(1){
@@ -24,7 +33,7 @@ void tecDom(){
     pthread_mutex_unlock(&mutexFile);
     
     
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < domSolsNum; i++){
         
         struct customer next;
         next.id = 0;
@@ -40,7 +49,7 @@ void tecDom(){
                 next = actual;
             }
             pos = pos + 1;
-            if(pos == 20){
+            if(pos == malloc_usable_size(customerList) / sizeof(struct customer)){
                 pos = 0;
             }    
         }while(next.id == 0);

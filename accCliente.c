@@ -1,3 +1,11 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
 
 void *accCliente(void *ptr){
 
@@ -27,7 +35,7 @@ void *accCliente(void *ptr){
             type = customerList[numClient].type;
             pthread_mutex_unlock(&mutexCustList);
 
-            if(type = 'N'){                 //The net clients could request a domiciliary technician
+            if(type == 'N'){                 //The net clients could request a domiciliary technician
                 clientAttendedAndNetClient(numClient);
             }else{                          //The app clients exit the plataform
                 clientExit(numClient, "I have been attended.");
@@ -80,7 +88,14 @@ void clientAttending(int numClient){
 }
 
 void clientAttendedAndNetClient(int numClient){
-    if( 30 <= calculaAleatorio(1, 100) ){   // 30% of net clients make a domiciliary requests
+
+    pthread_mutex_lock(&mutexCustList);
+    int cSolicited = customerList[numClient].solicited;
+    pthread_mutex_unlock(&mutexCustList);
+
+    int cElection = calculaAleatorio(1, 100);
+
+    if(30<=cElection && cSolicited!=-1){   // 30% of net clients make a domiciliary requests
        clientDomiciliaryRequests(numClient);
     }else{
         clientExit(numClient, "I don't want domiciliary attention.");
@@ -105,7 +120,6 @@ void clientDomiciliaryRequests(int numClient){
 
         pthread_mutex_lock(&mutexDomRequest);
         if(domSolsNum == 4){
-            pthread_mutex_unlock(&mutexCustList);
             pthread_cond_signal(&condDomRequest);
         }else{
             pthread_mutex_unlock(&mutexCustList);

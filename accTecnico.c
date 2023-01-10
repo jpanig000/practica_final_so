@@ -1,3 +1,12 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
+
                                                             //principal function 
 void *accTecnico(void *techPointer){
     
@@ -30,7 +39,7 @@ void techAction(struct technician tech){
         pthread_mutex_lock(&mutexCustList);
 
                                                             //seleccionar el siguiente cliente
-            for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+            for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
                 struct customer actual = customerList[i];
                 if (actual.id != 0 && actual.isAttended == -1 && actual.type == tech.type){
                     if (actual.priority > next.priority){
@@ -82,6 +91,10 @@ void techAction(struct technician tech){
         sleep(calculaAleatorio(2, 6));                     //error de identificacion
     }else if(atencion > 10 && atencion <= 20){
         fin = 1;
+        pthread_mutex_lock(&mutexCustList);
+            customerList[numNext].solicited = -1;          //the customer can´t solicity dom att
+        pthread_mutex_unlock(&mutexCustList);
+
         sleep(calculaAleatorio(1, 2));                     //compañia equivocada
     }else if(atencion > 20 && atencion <= 100){
         fin = 2;

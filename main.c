@@ -1,10 +1,19 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
+
 #include "libs.h"
 #include "main.h"
 
 int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2: num tecnicos de app
 
     int clientNum = 20;     // número de clientes
-    int techAppNum = 2;    // número de técnicos de app
+    techAppNum = 2;    // número de técnicos de app
 
     /*
         Control de parámetros
@@ -40,27 +49,26 @@ int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2:
 
     logFile = fopen("registroTiempos.log", "w");    // opens log file for writting (maybe changeable)
 
+    struct technician newTech[techAppNum+2];
     // creating app technicians
     for (int i = 0; i < techAppNum; i++) {
         
-        struct technician newAppTech;
-        newAppTech.id = i;
-        newAppTech.type = 'A';
+        newTech[i].id= i;
+        newTech[i].type = 'A';
 
         pthread_t newThread;
-        pthread_create(&newThread, NULL, accTecnico, &newAppTech);
+        pthread_create(&newThread, NULL, accTecnico, &newTech[i]);
 
     }
     
     // creating web technicians
     for (int i = techAppNum; i < techAppNum+2; i++) {   // para empezar a partir de los tecnicos ya creados
                                                         //  y que la id sea única
-        struct technician newNetTech;
-        newNetTech.id = i;
-        newNetTech.type = 'N';
+        newTech[i].id= i;
+        newTech[i].type = 'N';
 
         pthread_t newThread;
-        pthread_create(&newThread, NULL, accTecnico, &newNetTech);
+        pthread_create(&newThread, NULL, accTecnico, &newTech[i]);
 
     }
     
@@ -175,14 +183,15 @@ void addAppTechs() {
     if(new_techAppNum<=techAppNum) {
         printf("El número de técnicos de tipo app debe ser mayor que el actual.\n");
     } else {
+        struct technician newTech[new_techAppNum-techAppNum];
         for(int i=techAppNum+2; i<new_techAppNum+2; i++) {
-            struct technician newAppTech;
-            newAppTech.id = i;
-            newAppTech.type = 'A';
+            newTech[i-techAppNum-2].id = i;
+            newTech[i-techAppNum-2].type = 'A';
 
             pthread_t newThread;
-            pthread_create(&newThread, NULL, accTecnico, &newAppTech);
+            pthread_create(&newThread, NULL, accTecnico, &newTech[i-techAppNum-2]);
         }
+        techAppNum=new_techAppNum;
     }
 
 }
@@ -223,13 +232,35 @@ void finish(int sig){                               //Finish the program
         exit(-1);
     }
     
+    // Hago que si no han pedido el servicio tecnico domiciliario no puedan pedirlo
+    pthread_mutex_lock(&mutexCustList);
+        for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
+            if(customerList[i].solicited==0){
+                customerList[i].solicited=-1;
+            }
+        }  
+    pthread_mutex_unlock(&mutexCustList);
+    
+    
+
+    //Dom tec atiende a todos los que estaban esperando
+    pthread_mutex_lock(&mutexDomRequest);
+    int sols = domSolsNum;
+    pthread_mutex_unlock(&mutexDomRequest);
+    if(sols>0){
+        pthread_mutex_lock(&mutexDomRequest);
+        pthread_cond_signal(&condDomRequest);
+        pthread_mutex_unlock(&mutexDomRequest);
+    }
+    
+
     //Miro el numero de clientes
     int numC = 0;
     struct customer actual;
     do{
         numC = 0;
         sleep(1);
-        for(int i = 0; i < sizeof(customerList)/sizeof(struct customer); i++){
+        for(int i = 0; i < malloc_usable_size(customerList) / sizeof(struct customer); i++){
             pthread_mutex_lock(&mutexCustList);
             actual = customerList[i];
             pthread_mutex_unlock(&mutexCustList);

@@ -1,7 +1,6 @@
 #include "libs.h"
 #include "main.h"
 
-
 int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2: num tecnicos de app
 
     int clientNum = 20;     // número de clientes
@@ -26,6 +25,7 @@ int main(int argc, char *argv[]) { // parametro 1: num clientes. // parametro 2:
     } else if(argc == 1) {/*si no hay parámetros*/} else {
         printf("El programa solo admite dos parámetros: el número máximo de clientes y el número"); 
         printf(" de técnicos de tipo app.\n");
+        return 0;
     }
 
     declareHandlers();                              // declares handlers for SIGUSR1, SIGUSR2 and SIGINT

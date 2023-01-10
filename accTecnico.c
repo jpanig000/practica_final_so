@@ -11,10 +11,11 @@
 void *accTecnico(void *techPointer){
     
     struct technician tech = *(struct technician *) techPointer;
-    int counter = 1;
+    int counter = 0;
     
     while(1){
         techAction(tech);
+        counter++;
         if(tech.type == 'A'){
             if(counter == 5){
                 counter = 0;
@@ -133,5 +134,4 @@ void techAction(struct technician tech){
         customerList[numNext].isAttended = 1;
     pthread_mutex_unlock(&mutexCustList);
     
-    counter++;
 }

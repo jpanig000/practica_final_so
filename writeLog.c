@@ -1,3 +1,12 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
+
 //Escribe en el archivo con identificador id y mensaje
 void writeLog(char *id, char *msg){
     time_t now = time(0);

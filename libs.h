@@ -1,3 +1,12 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
+
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>

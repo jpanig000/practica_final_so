@@ -1,3 +1,12 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
+
 struct customer {   // struct representing customers
     int id;         // End at even for app, odd for net
     int isAttended; // -1 if is not, 0 if atending, 1 atended

@@ -1,3 +1,11 @@
+/*
+*   Grupo 16
+*
+*   Alicia Gómez Pascual
+*   Julián Paniagua González
+*   Rubén Fernández González
+*   Sergio González Rebollo
+*/
 
 void nuevoCliente(char type){
 

@@ -11,4 +11,4 @@ SIGUSR2: añade un cliente de tipo red
 SIGPIPE: permite aumentar el tamaño de la lista de clientes 
 SIGQUIT: permite añadir técnicos de tipo app hasta el número especificado
 
-SIGINT: finaliza el proceso de forma ordenada. No permite añadir más clientes, atiende a los restantes,  envia al tecnico de atención domiciliaria y termina.
+SIGINT: finaliza el proceso de forma ordenada. No permite añadir más clientes, atiende a los restantes,  envia al técnico de atención domiciliaria y termina.

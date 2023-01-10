@@ -267,10 +267,9 @@ void finish(int sig){                               //Finish the program
             pthread_mutex_lock(&mutexCustList);
             actual = customerList[i];
             pthread_mutex_unlock(&mutexCustList);
-            
+
             if (actual.id != 0){
                 numC = 1;
-                printf("%d\n", actual.id);
             }
             
         }  

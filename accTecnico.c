@@ -130,5 +130,6 @@ void techAction(struct technician tech){
     pthread_mutex_lock(&mutexCustList);
         customerList[numNext].isAttended = 1;
     pthread_mutex_unlock(&mutexCustList);
-
+    
+    counter++;
 }

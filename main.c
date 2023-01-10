@@ -163,7 +163,7 @@ void changeCustomerList() {
         struct customer *new_customerList;
         new_customerList = (struct customer *) malloc(numCustomers * sizeof(struct customer));
 
-        memcpy(new_customerList, customerList, numCustomers * sizeof(struct customer));
+        memcpy(new_customerList, customerList, tamActual * sizeof(struct customer));
 
         customerList = new_customerList;
 
@@ -267,9 +267,12 @@ void finish(int sig){                               //Finish the program
             pthread_mutex_lock(&mutexCustList);
             actual = customerList[i];
             pthread_mutex_unlock(&mutexCustList);
+            
             if (actual.id != 0){
                 numC = 1;
+                printf("%d\n", actual.id);
             }
+            
         }  
     }while(numC == 1); 
     free(customerList);

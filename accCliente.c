@@ -148,7 +148,17 @@ void clientDomiciliaryRequests(int numClient){
     }else{
         pthread_mutex_unlock(&mutexDomRequest);
         sleep(3);
-        clientDomiciliaryRequests(numClient);
+        pthread_mutex_lock(&mutexCustList);
+        if(customerList[numClient].solicited==0){
+            pthread_mutex_unlock(&mutexCustList);
+
+            clientDomiciliaryRequests(numClient);
+        }else{
+            pthread_mutex_unlock(&mutexCustList);
+
+            clientExit(numClient, "Can no longer ask for domiciliary attention.");
+        }
+
     }
 }
 

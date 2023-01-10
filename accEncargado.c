@@ -127,7 +127,7 @@ void manAction(){
     pthread_mutex_unlock(&mutexFile);
                                                             //cambiar atendido
     pthread_mutex_lock(&mutexCustList);
-        customerList[numNext].isAttended = 0;
+        customerList[numNext].isAttended = 1;
     pthread_mutex_unlock(&mutexCustList);
 
 }
